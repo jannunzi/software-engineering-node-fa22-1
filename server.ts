@@ -5,6 +5,9 @@ import express, {Request, Response} from 'express';
 import * as mongoose from "mongoose";
 import * as moviesDao from "./movies/movies-dao";
 import MoviesController from "./movies/movies-controller";
+import ActorController from "./actors/actor-controller";
+import ActorsService from "./movies/actors-service";
+import ActorsDao from "./actors/actors-dao";
 const cors = require('cors')
 const app = express();
 app.use(cors());
@@ -28,6 +31,11 @@ const sayHello2 = (req: Request, res: Response) =>
     res.send('Hi from FSD 2!!!');
 
 const movieController = new MoviesController(app);
+const actorDao = new ActorsDao();
+const actorService = new ActorsService(actorDao);
+const actorController = new ActorController(app, actorService);
+
+require('./castings/castings-controller')(app);
 
 app.get('/', sayHello);
 
