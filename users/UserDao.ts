@@ -10,8 +10,11 @@ export default class UserDao implements UserDaoI {
 
         const userModels = userMongooseModels.map((userMongooseModel) => {
             return new User(
-                userMongooseModel.username,
-                userMongooseModel.password
+                userMongooseModel?._id.toString()??'',
+                userMongooseModel?.username??'',
+                userMongooseModel?.password??'',
+                userMongooseModel?.firstName??'',
+                userMongooseModel?.lastName??'',
             );
         });
         return userModels;
@@ -19,24 +22,28 @@ export default class UserDao implements UserDaoI {
     async findUserById(uid: string): Promise<User> {
         const userMongooseModel = await UserModel.findById(uid);
         return new User(
+            userMongooseModel?._id.toString()??'',
             userMongooseModel?.username??'',
-            userMongooseModel?.password??''
+            userMongooseModel?.password??'',
+            userMongooseModel?.firstName??'',
+            userMongooseModel?.lastName??'',
         );
     }
     async createUser(user: User): Promise<User> {
         const userMongooseModel = await UserModel.create(user);
         return new User(
-            userMongooseModel.username,
-            userMongooseModel.password
+            userMongooseModel?._id.toString()??'',
+            userMongooseModel?.username??'',
+            userMongooseModel?.password??'',
+            userMongooseModel?.firstName??'',
+            userMongooseModel?.lastName??'',
         );
     }
     async deleteUser(uid: string):  Promise<any> {
         return await UserModel.deleteOne({_id: uid});
     }
-    async updateUser(uid: string, user: User): Promise<any> {
-        return await UserModel.updateOne({_id: uid}, {$set: {
-                username: user.uName,
-                password: user.pass
-            }});
+    async updateUser(uid: string, user: any): Promise<any> {
+        // console.log(uid, user)
+        return await UserModel.updateOne({_id: uid}, {$set: user});
     }
 }
