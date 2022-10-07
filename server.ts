@@ -35,7 +35,7 @@ const options = {
     family: 4
 }
 
-mongoose.connect('mongodb://alice:alice123@localhost:27017/fsd', options);
+mongoose.connect('mongodb://localhost:27017/fsd', options);
 
 const userDao = new UserDao();
 const userController = new UserController(app, userDao);
