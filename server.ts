@@ -21,6 +21,7 @@ import express, {Request, Response} from 'express';
 import * as mongoose from "mongoose";
 import * as moviesDao from "./movies/movies-dao";
 import MoviesController from "./movies/movies-controller";
+import bookmarksController from "./bookmarks/bookmarks-controller";
 const cors = require('cors')
 const app = express();
 app.use(cors());
@@ -40,6 +41,7 @@ const options = {
 mongoose.connect('mongodb://localhost:27017/fsd', options);
 
 followsController(app);
+bookmarksController(app);
 
 const userDao = new UserDao();
 const userController = new UserController(app, userDao);
