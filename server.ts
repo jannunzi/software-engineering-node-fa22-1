@@ -10,6 +10,8 @@ import TuitDao from "./tuits/TuitDao";
 import TuitController
     from "./tuits/TuitController";
 
+import {followsController} from "./follows/follows-controller";
+
 import UserDao from "./users/UserDao";
 import UserController from "./users/UserController";
 import ActorController from "./actors/actors-controller";
@@ -36,6 +38,8 @@ const options = {
 }
 
 mongoose.connect('mongodb://localhost:27017/fsd', options);
+
+followsController(app);
 
 const userDao = new UserDao();
 const userController = new UserController(app, userDao);
